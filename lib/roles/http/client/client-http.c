@@ -813,7 +813,7 @@ lws_http_digest_auth(struct lws* wsi)
 
 		tmp_digest = lws_malloc(l, __func__);
 		if (!tmp_digest)
-			return -1;
+			return (enum lws_check_basic_auth_results)-1;
 
 		n = lws_snprintf(tmp_digest, l, "%s:%s:%s",
 				 username, realm, password);
@@ -928,7 +928,7 @@ lws_http_digest_auth(struct lws* wsi)
 bail:
 	lws_free(tmp_digest);
 
-	return -1;
+	return (enum lws_check_basic_auth_results)-1;
 }
 #endif
 
@@ -1052,7 +1052,7 @@ lws_client_interpret_server_handshake(struct lws *wsi)
 		if (!(wsi->stash && wsi->stash->cis[CIS_USERNAME] &&
                 		    wsi->stash->cis[CIS_PASSWORD])) {
 			lwsl_err("Digest auth requested by server but no credentials provided by user\n");
-			
+
 			return LCBA_FAILED_AUTH;
 		}
 
@@ -1094,7 +1094,7 @@ lws_client_interpret_server_handshake(struct lws *wsi)
 		    && !wsi->client_bound_sspc
 #endif
 		   ) {
-	
+
 			lws_ss_handle_t *h = (lws_ss_handle_t *)lws_get_opaque_user_data(wsi);
 
 			if (h)
