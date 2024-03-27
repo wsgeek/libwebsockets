@@ -257,11 +257,11 @@ typedef struct lws_ss_info {
 		void			*opaque_data;
 
 #define LWS_SS_INFO(_streamtype, _type) \
-	const lws_ss_info_t ssi_##_type = { \
-		.handle_offset = offsetof(_type, ss), \
-		.opaque_user_data_offset = offsetof(_type, opaque_data), \
+	lws_ss_info_t ssi_##_type = { \
+		.streamtype = _streamtype, \
 		.user_alloc = sizeof(_type), \
-		.streamtype = _streamtype,
+		.handle_offset = offsetof(_type, ss), \
+		.opaque_user_data_offset = offsetof(_type, opaque_data),
 
 #define lws_ss_from_user(_u)		(_u)->ss
 #define lws_ss_opaque_from_user(_u)	(_u)->opaque_data
@@ -415,7 +415,7 @@ lws_ss_get_context(struct lws_ss_handle *h);
  *
  * \param h: secure streams handle
  *
- * Returns NULL if disconnected, or the the lws_vhost of the ss' wsi connection. 
+ * Returns NULL if disconnected, or the the lws_vhost of the ss' wsi connection.
  */
 LWS_VISIBLE LWS_EXTERN struct lws_vhost *
 lws_ss_get_vhost(struct lws_ss_handle *h);
@@ -710,4 +710,3 @@ lws_aws_filesystem_credentials_helper(const char *path, const char *kid,
 #endif
 
 ///@}
-
