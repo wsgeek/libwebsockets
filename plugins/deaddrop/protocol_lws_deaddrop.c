@@ -135,7 +135,7 @@ scan_upload_dir(struct vhd_deaddrop *vhd)
 	char filepath[256], subdir[3][128], *p;
 	struct lwsac *lwsac_head = NULL;
 	lws_list_ptr sorted_head = NULL;
-	int i, sp = 0, found = 0;
+	[[maybe_unused]] int i, sp = 0, found = 0;
 	struct dir_entry *dire;
 	struct dirent *de;
 	size_t initial, m;
